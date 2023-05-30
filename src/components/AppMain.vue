@@ -13,7 +13,7 @@ export default{
             console.log('Forza inter')
             axios.get('http://localhost:8000/api/posts')
             .then(response => {
-                console.log(response)
+                console.log(response);
             })
 
         }
