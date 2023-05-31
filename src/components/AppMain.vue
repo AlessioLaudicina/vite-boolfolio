@@ -1,29 +1,41 @@
 <script>
 
 import axios from 'axios';
+import { store } from '../store.js';
+import ProjectCard from './ProjectCard.vue';
 export default{
-    name: 'AppMain',
-    data(){
+    name: "AppMain",
+    data() {
         return {
-            posts:[]
-
-        }
+            posts: [],
+            contentMaxLength: 200,
+            currentPage: 1,
+            store
+        };
     },
     methods: {
-        getPosts(){
-            console.log('Forza inter')
-            axios.get('http://localhost:8000/api/posts')
-            .then(response => {
+        getPosts(gotoPage) {
+            axios.get('${this.store.baseUrl}/api/posts', {
+                params: this.currentPage
+            })
+                .then(response => {
                 console.log(response);
                 this.posts = response.data.results;
-            })
-
+                this.currentPage = response.data.results.currentPage;
+            });
+        },
+        // funzione per troncare il testo delle card
+        truncateText(text) {
+            if (text && text.length > this.contentMaxLength) {
+                return text.substr(0, this.contentMaxLength) + "...";
+            }
+            return text;
         }
-
     },
-    mounted(){
-        this.getPosts();
-    }
+    mounted() {
+        this.getPosts(1);
+    },
+    components: { ProjectCard }
 }
 </script>
 
@@ -31,17 +43,23 @@ export default{
     <div class="container">
         <div class="row">
             <div class="col-4" v-for="post in posts">
-                <div class="card" style="width: 18rem;">
-              <img class="card-img-top" src="" alt="Card image cap">
-               <div class="card-body">
-                 <h5 class="card-title">{{ post.title }}</h5>
-                 <p class="card-text">{{ post.content }}</p>
-                 <a href="#" class="btn btn-primary">Vedi post completo</a>
-                </div>
-             </div>
+                <ProjectCard :post="post"></ProjectCard>
+               
 
             </div>
         </div>
+
+        <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a class="page-link" @click="getPosts(currentPage - 1)" :class="{'disable' : currentPage=1}">Previous</a>
+    </li>
+    
+    <li class="page-item">
+      <a class="page-link" @click="getPosts(currentPage + 1)">Next</a>
+    </li>
+  </ul>
+</nav>
     </div>
 
 </template>
