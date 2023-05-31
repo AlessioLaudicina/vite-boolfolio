@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import { store } from '../store.js';
-import ProjectCard from './ProjectCard.vue';
+import ProjectCard from '../components/ProjectCard.vue';
 export default{
     name: "AppMain",
     data() {
@@ -15,8 +15,10 @@ export default{
     },
     methods: {
         getPosts(gotoPage) {
-            axios.get('${this.store.baseUrl}/api/posts', {
-                params: this.currentPage
+            axios.get(`${this.store.baseUrl}/api/posts`, {
+                params: {
+                    page: gotoPage
+                }
             })
                 .then(response => {
                 console.log(response);
