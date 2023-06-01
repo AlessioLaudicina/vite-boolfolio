@@ -33,7 +33,7 @@ export default {
                 <h5 class="card-title">{{post.title}}</h5>
                 <h5>{{post.category?.name}}</h5>
                 <p class="card-text">{{ truncateText(post.content) }}</p>
-                <a href="#" class="btn btn-primary">Vedi post completo</a>
+                <router-link :to="{name: 'SingleProject', params: {slug: post.slug}}" class="btn btn-primary">Vedi progetto</router-link>
                </div>
     </div>
 </template>
