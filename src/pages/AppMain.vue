@@ -8,8 +8,8 @@ export default{
     data() {
         return {
             posts: [],
-            contentMaxLength: 200,
             currentPage: 1,
+            lastPage: null,
             store
         };
     },
@@ -22,22 +22,16 @@ export default{
             })
                 .then(response => {
                 console.log(response);
-                this.posts = response.data.results;
+                this.posts = response.data.results.data;
                 this.currentPage = response.data.results.currentPage;
+                this.lastPage = response.data.results.last_page;
             });
         },
-        // funzione per troncare il testo delle card
-        truncateText(text) {
-            if (text && text.length > this.contentMaxLength) {
-                return text.substr(0, this.contentMaxLength) + "...";
-            }
-            return text;
-        }
     },
     mounted() {
         this.getPosts(1);
     },
-    components: { ProjectCard }
+    components: { ProjectCard },
 }
 </script>
 
@@ -53,12 +47,12 @@ export default{
 
         <nav aria-label="...">
   <ul class="pagination">
-    <li class="page-item disabled">
-      <a class="page-link" @click="getPosts(currentPage - 1)" :class="{'disable' : currentPage=1}">Previous</a>
+    <li class="page-item">
+      <button class="page-link" @click="getPosts(currentPage - 1)" :class="{'disable' : currentPage=1}">Previous</button>
     </li>
     
     <li class="page-item">
-      <a class="page-link" @click="getPosts(currentPage + 1)">Next</a>
+      <button class="page-link" @click="getPosts(currentPage + 1)" :class="{'disabled' : currentPage == lastPage}">Next</button>
     </li>
   </ul>
 </nav>
