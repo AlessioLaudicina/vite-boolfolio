@@ -5,18 +5,29 @@ export default{
 </script>
 
 <template>
-   <div class="p-5 text-center bg-body-tertiary rounded-3">
-    <h1 class="text-body-emphasis">Boolfoglio</h1>
-    <p class="col-lg-8 mx-auto fs-5 text-muted">
-      This is a custom jumbotron featuring text that wraps early thanks to a responsive <code>.col-*</code> class, and a customized call to action.
-    </p>
-    <div class="d-inline-flex gap-2 mb-5">
-      <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
-        I tuoi progetti
-      </button>
-      <button class="btn btn-outline-secondary btn-lg px-4 rounded-pill" type="button">
-        Secondary link
-      </button>
+    <div class="jt-container">
+        <div class="container p-5">
+            <h1 class="mb-4">Welcome on my portfolio</h1>
+            <p>
+                My name is Alessio and I am a web developer based in Turin, Italy. My journey in this world has started on 2021 and I have now skills in HTML, CSS, PHP and JavaScript.
+            </p>
+            <p> I am always happy to learn new things.
+            </p>
+        </div>
     </div>
-  </div>
 </template>
+
+
+<style lang="scss" scoped>
+@use '../styles/general.scss';
+.jt-container{
+    width: 100%;
+    height: 100vh;
+    .container{
+        margin: 0;
+        padding: 0
+    }
+}
+
+
+</style>
